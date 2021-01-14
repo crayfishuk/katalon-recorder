@@ -110,8 +110,8 @@ function formatHeader(name,testCase) {
             openurl = testCase.getBaseURL();
         }
     }
-    header += "    [Setup]  Run Keywords  Open Browser  " + openurl + "  ${BROWSER}\n";
-    header += "    ...              AND   Set Selenium Speed  ${SELSPEED}\n";
+    header += "    [Setup]  Open Browser \n";
+    header += "    New Page     " + openurl + "\n";
     return header;
 }
 
@@ -177,23 +177,23 @@ this.name = "robotframework-testing_selenium";
 
 options.header =
     '*** Settings ***\n' +
-    'Library  SeleniumLibrary\n\n' +
+    'Library  BrowserLibrary\n\n' +
     '*** Variables ***\n' +
     '${BROWSER}   ' + this.active_browser + '\n' +
-    '${SELSPEED}  0.0s\n\n' +
+    '\n' +
     '*** Test Cases ***\n';
 
 options.footer =
     '\n*** Keywords ***\n' +
     'open\n' +
     '    [Arguments]    ${element}\n' +
-    '    Go To          ${element}\n\n' +
+    '    New Page          ${element}\n\n' +
     'clickAndWait\n' +
     '    [Arguments]    ${element}\n' +
-    '    Click Element  ${element}\n\n' +
+    '    Click          ${element}\n\n' +
     'click\n' +
     '    [Arguments]    ${element}\n' +
-    '    Click Element  ${element}\n\n' +
+    '    Click          ${element}\n\n' +
     'sendKeys\n' +
     '    [Arguments]    ${element}    ${value}\n' +
     '    Press Keys     ${element}    ${value}\n\n' +
@@ -202,28 +202,32 @@ options.footer =
     '    Submit Form    ${element}\n\n' +
     'type\n' +
     '    [Arguments]    ${element}    ${value}\n' +
-    '    Input Text     ${element}    ${value}\n\n' +
+    '    Type Text      ${element}    ${value}\n\n' +
     'selectAndWait\n' +
-    '    [Arguments]        ${element}  ${value}\n' +
-    '    Select From List   ${element}  ${value}\n\n' +
+    '    [Arguments]           ${element}  ${value}\n' +
+    '    Select Options By     ${element}  ${value}\n\n' +
     'select\n' +
-    '    [Arguments]        ${element}  ${value}\n' +
-    '    Select From List   ${element}  ${value}\n\n' +
+    '    [Arguments]          ${element}  ${value}\n' +
+    '    Select Options By    ${element}  ${value}\n\n' +
     'verifyValue\n' +
     '    [Arguments]                  ${element}  ${value}\n' +
     '    Element Should Contain       ${element}  ${value}\n\n' +
     'verifyText\n' +
     '    [Arguments]                  ${element}  ${value}\n' +
-    '    Element Should Contain       ${element}  ${value}\n\n' +
+    '    #Element Should Contain       ${element}  ${value}\n\n' +
+    '    Get Element       ${element}    *=    ${value}\n\n' +
     'verifyElementPresent\n' +
     '    [Arguments]                  ${element}\n' +
-    '    Page Should Contain Element  ${element}\n\n' +
+    '    #Page Should Contain Element  ${element}\n\n' +
+    '    Get Element Count      ${element}    >   0\n\n' +
     'verifyVisible\n' +
     '    [Arguments]                  ${element}\n' +
-    '    Page Should Contain Element  ${element}\n\n' +
+    '    #Page Should Contain Element  ${element}\n\n' +
+    '    Get Element State      ${element}    visible\n\n' +
     'verifyTitle\n' +
-    '    [Arguments]                  ${title}\n' +
-    '    Title Should Be              ${title}\n\n' +
+    '    [Arguments]              ${title}\n' +
+    '    #Title Should Be              ${title}\n\n' +
+    '    Get Title      ==        ${title}\n\n' +
     'verifyTable\n' +
     '    [Arguments]                  ${element}  ${value}\n' +
     '    Element Should Contain       ${element}  ${value}\n\n' +
