@@ -57,6 +57,12 @@ function filterForRemoteControl(originalCommands) {
             c1 = c1.replace(/label=/g,"");
         }
 
+        
+        if (c1.match("link="))
+        {
+            c1 = c1.replace(/link=/,"text=");
+        }
+        
         //Xu ly xpath
         var temp = c1.indexOf("//");
         if (temp != -1 && c1.charAt(temp-1) == " ")
@@ -177,7 +183,7 @@ this.name = "robotframework-testing_selenium";
 
 options.header =
     '*** Settings ***\n' +
-    'Library  BrowserLibrary\n\n' +
+    'Library  Browser\n\n' +
     '*** Variables ***\n' +
     '${BROWSER}   ' + this.active_browser + '\n' +
     '\n' +
@@ -193,7 +199,7 @@ options.footer =
     '    Click          ${element}\n\n' +
     'click\n' +
     '    [Arguments]    ${element}\n' +
-    '    Click          ${element}\n\n' +
+    '    Browser.Click          ${element}\n\n' +
     'sendKeys\n' +
     '    [Arguments]    ${element}    ${value}\n' +
     '    Press Keys     ${element}    ${value}\n\n' +
