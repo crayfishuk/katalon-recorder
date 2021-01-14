@@ -60,7 +60,7 @@ function filterForRemoteControl(originalCommands) {
         
         if (c1.match("link="))
         {
-            c1 = c1.replace(/link=/,"text=");
+            c1 = c1.replace(/link=/,"text=\"") + '"';
         }
         
         //Xu ly xpath
